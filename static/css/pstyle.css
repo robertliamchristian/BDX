@@ -6,7 +6,6 @@ body {
     line-height: 1.5;
     color: #212529;
     display: flex;
-
 }
 
 #main-container {
@@ -16,11 +15,10 @@ body {
     margin-right: 50px;
     padding: 0px;
     background-color: #3D437E;
-    
 }
 
 #top-card {
-    margin-top: 0px;
+    margin-top: 50px;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;
@@ -29,17 +27,30 @@ body {
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     border: 2px solid #e6e6e6;
+    position: fixed;
+    z-index: 2;
+    width: 85.6%;
+    max-width: 500px;
 }
+
 #bottom-card {
-    margin-top: 0px;
+    margin-top: 100px;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;
     padding: 20px;
+    padding-top: 100px;
     background-color: #f2f2f2;
     border-bottom-right-radius: 25px;
     border-bottom-left-radius: 25px;
     border: 2px solid #e6e6e6;
+    position: fixed;
+    width: 100%;
+    max-width: 500px;
+    height: 600px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; 
 }
 
 .bird-search input[type="submit"] {
@@ -69,4 +80,18 @@ body {
     width: 85.6%;
     background-color: #E8A3BE;
     
+}
+
+
+.user-info {
+    position: fixed;
+    z-index: 5;
+    margin-bottom: 50px;
+    margin-left: 20px;
+}
+
+#suggestions {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 5px;
 }
