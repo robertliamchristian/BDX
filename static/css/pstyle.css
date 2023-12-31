@@ -1,0 +1,72 @@
+body {
+    background-color: #3D437E;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    display: flex;
+
+}
+
+#main-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 0px;
+    background-color: #3D437E;
+    
+}
+
+#top-card {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 20px;
+    background-color: #E8A3BE;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    border: 2px solid #e6e6e6;
+}
+#bottom-card {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border: 2px solid #e6e6e6;
+}
+
+.bird-search input[type="submit"] {
+    background-color: #F50348;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.bird-search input[type="submit"]:hover {
+    background-color: #2C315C;
+}
+
+.bird-search input[type="text"] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #E8A3BE;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #212529;
+    margin-bottom: 10px;
+    width: 85.6%;
+    background-color: #E8A3BE;
+    
+}

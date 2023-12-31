@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login</title>
+    
+</head>
+</head>
+<body>
+    <div id="header">
+    <h2>Login</h2>
+</div>
+<div id="content">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.username.label }}<br>
+            {{ form.username(size=32) }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <p>Need an account? <a href="{{ url_for('register') }}">register here</a></p>
+</div>
+</body>
+</html>

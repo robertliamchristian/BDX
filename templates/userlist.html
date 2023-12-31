@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Birdédex Lists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pstyle.css') }}">
+</head>
+<body>
+    
+    <div id="alt-header">
+        <div id="name_header">
+                <a href="{{ url_for('home') }}"><b>Birdédex Lists</b></a>
+            <div id="total-logged">Edit or create lists that will affect your Birdedex</div>
+        </div>
+        <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
+    </div>
+    
+    <div id="slide-in-menu" class="menu">
+    <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+    
+    
+    {% if current_user.is_authenticated %}
+    <div class="menu-content">
+        <div class="mylistnav"><a href="{{ url_for('home') }}">Home</a></div>
+        <div class="mylistnav"><a href="{{ url_for('index') }}">Birdedex</a></div>
+        <div class="user-info">
+            <span>Logged in as {{ current_user.username }}</span>
+            <form action="{{ url_for('logout') }}" method="post">
+                <input type="submit" value="Logout">
+            </form>
+        </div>
+        
+        
+    </div>
+    {% endif %}
+</div>
+
+    <h1>My Bird Lists</h1>
+    
+    <!-- Display existing lists -->
+   <div id="existing-lists">
+    <h2>Existing Lists</h2>
+    <ul class='no-bullets'>
+        {% for list in lists %}
+            <li style="display: flex; justify-content: center; align-items: center;">
+                <div style="flex-grow: 1; text-align: center;">
+                    <a class="list_white_content_link" href="{{ url_for('view_list', listid=list.listid) }}" style="margin-right: 10px;">{{ list.title }}</a>
+                    - Created on {{ list.created_at.strftime('%Y-%m-%d') }}
+                </div>
+                <!-- Delete List Form -->
+                <form action="{{ url_for('delete_list', listid=list.listid) }}" method="POST" onsubmit="return confirmDeleteList('{{ list.title }}')" style="margin-left: 10px;">
+                    <button type="submit">Delete List</button>
+                </form>
+            </li>
+        {% else %}
+            <li>No lists found.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+    function confirmDeleteList(listTitle) {
+        return confirm('Do you really want to delete the list "' + listTitle + '" and all its contents?');
+    }
+</script>
+
+    
+    <!-- Form to create a new list -->
+    <div id="new-list-form">
+        <h2>Create a New List</h2>
+        <form action="{{ url_for('userlist') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input type="text" name="list_name" placeholder="Enter list title" required>
+    <input type="submit" value="Create List">
+</form>
+
+    </div>
+
+
+
+<script>
+    function toggleMenu() {
+    var menu = document.getElementById("slide-in-menu");
+    menu.style.width = menu.style.width === '250px' ? '0' : '250px';
+}
+    window.onload = function() {
+        var element = document.getElementById("{{ anchor_id }}");
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
+    function fetchSuggestions() {
+        var input = document.getElementById('bird-input');
+        var query = input.value;
+
+        if (query.length < 2) {
+            document.getElementById('suggestions').style.display = 'none';
+            return;
+        }
+
+        fetch('/suggest_birds?query=' + query)
+            .then(response => response.json())
+            .then(suggestions => {
+                var suggestionsDiv = document.getElementById('suggestions');
+                suggestionsDiv.innerHTML = '';
+                suggestions.forEach(function(suggestion) {
+                    var div = document.createElement('div');
+                    div.innerHTML = suggestion;
+                    div.onclick = function() {
+                        input.value = suggestion;
+                        suggestionsDiv.style.display = 'none';
+                    };
+                    suggestionsDiv.appendChild(div);
+                });
+                if (suggestions.length > 0) {
+                    suggestionsDiv.style.display = 'block';
+                } else {
+                    suggestionsDiv.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching suggestions:', error));
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('#bird-input')) {
+            document.getElementById('suggestions').style.display = 'none';
+        }
+    };
+    </script>
+
+</body>
+</html>
