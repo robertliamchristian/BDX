@@ -10,21 +10,14 @@
 
 <body>
     <div id="main-container">
+
+        <!-- Top Card -->
         <div id="top-card">
-            <div id="name_header">
-                <!--<a href="{{ url_for('home') }}"><b>Birdédex</b></a>-->
-                <!--<div id="total-logged">Total Distinct Birds Logged {{ sighted_count }}/{{ total_bird_count }}</div>-->
-                {% if message %}
-                <div id="update_message">{{ message }}</div>
-                {% endif %}
-            </div>
-            <!--<div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>-->
-            <div id="slide-in-menu" class="menu">
-                <!--<a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>-->
+
+            <!-- Add Bird Logic -->
+            <div id="top-main">
                 {% if current_user.is_authenticated %}
-                <div class="menu-content">
-                    <!--<div class="mylistnav"><a href="{{ url_for('home') }}">Home</a></div>-->
-                    <!--<div class="mylistnav"><a href="{{ url_for('userlist') }}">My Lists</a></div>-->
+                <div class="add-bird">
                     <div class="bird-search">
                         <form action="{{ url_for('index') }}" method="post">
                             <input type="text" name="bird" id="bird-input" placeholder="Enter a bird name"
@@ -32,12 +25,23 @@
                             <input type="submit" value="Add Bird">
                         </form>
                     </div>
+                    <!-- Add in url for View List-->
+                    <a class="button" href="{{ url_for('userlist') }}">My Lists</a>
+
                     <div id="suggestions" style="display:none;"></div>
-                    
+                </div>
+
+                <!-- Update Message-->
+                <div id="message">
+                    {% if message %}
+                    <div id="update-message">{{ message }}</div>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
         </div>
+
+        <!-- Bottom Card -->
         <div id="bottom-card">
             <div id="content">
                 {% for bird_type, bird_list in user_birdedex.items() %}
@@ -55,7 +59,9 @@
 
                 {% endfor %}
             </div>
-            
+        
+
+        <!-- Exrta -->
         </div>
         <div class="user-info">
             <span>Logged in as {{ current_user.username }}</span>
@@ -63,6 +69,14 @@
                 <input type="submit" value="Logout">
             </form>
         </div>
+
+
+
+
+
+
+
+
 
 
         <script>

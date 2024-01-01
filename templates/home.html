@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pstyle.css') }}">
 </head>
 <body>
+    <div id="main-container">
+    
+
+<div id="top-card">
     <div id="header">
         <div id="name_header">
             <a href="{{ url_for('home') }}"><b>Birdédex</b></a>
@@ -34,8 +38,11 @@
     {% endif %}
 </div>
 
+</div>
 
-<section id="home-content">
+
+<div id="bottom-card">
+    <section id="home-content">
         <nav class="home_selection">
             <ul class="home-no-bullets">
                 <li>
@@ -47,8 +54,9 @@
             </ul>
         </nav>
     </section>
+    </div>
 
-
+</div>
 
         <script>
     function toggleMenu() {

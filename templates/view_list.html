@@ -3,46 +3,25 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Birdédex Lists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pstyle.css') }}">
     
 </head>
 <body>
-    
-    <div id="header">
-    <div id="name_header">
-        <a href="{{ url_for('home') }}"><b>Birdédex Lists</b></a>
-        <div id="total-logged">Add sightings to your list</div>
-    </div>
+    <div id="main-container">
+    <div id="top-card">
+        <div id="header">
+           
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-                <div id="update_message" class="{{ category }}">{{ message }}</div>
+        <div id="update_message" class="{{ category }}">{{ message }}</div>
             {% endfor %}
         {% endif %}
     {% endwith %}
 
-
-        <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
-    </div>
-    
-    <div id="slide-in-menu" class="menu">
-        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
-        
         {% if current_user.is_authenticated %}
-            <div class="menu-content">
-                
-                <div class="user-info">
-                    <div class="mylistnav"><a href="{{ url_for('home') }}">Home</a></div>
-                    <div class="mylistnav"><a href="{{ url_for('index') }}">Birdedex</a></div>
-                    <div class="mylistnav"><a href="{{ url_for('userlist') }}">My Lists</a></div>
-                    
-                </div>
-                <span>Logged in as {{ current_user.username }}</span>
-                    <form action="{{ url_for('logout') }}" method="post">
-                        <input type="submit" value="Logout">
-                    </form>
-                
-            </div>
+           
         {% endif %}
     </div>
    <div class="bird-search">
@@ -53,30 +32,42 @@
 
     <div id="suggestions" style="display:none;"></div>
 </div>
-
-    
-   <div id="list">
-    <h1>{{ list.title }} - Bird Count : {{ bird_count }}</h1>
-    <h3>Logged Birds:</h3>
-    <ul>
+</div>
+    <div id="bottom-card">
+        <div id="userlist"></div>
+            <h1>{{ list.title }} - Bird Count : {{ bird_count }}</h1>
+            <h3>Logged Birds:</h3>
+                <ul>
     {% for sighting_id, birdref, bird_name, latest_sighting_time in sightings %}
-    <li>
-        <div>
-            {{ birdref }}. {{ bird_name }} - {{ latest_sighting_time.strftime('%m-%d-%Y') }}
-        </div>
-        <form action="{{ url_for('delete_sighting', sightingid=sighting_id) }}" method="POST">
-            <button type="submit">Delete</button>
-        </form>
-    </li>
+                    <li>
+                         <div>
+    {{ birdref }}. {{ bird_name }} - {{ latest_sighting_time.strftime('%m-%d-%Y') }}
+                        </div>
+                        <form action="{{ url_for('delete_sighting', sightingid=sighting_id) }}" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                     </li>
     {% else %}
-    <li>No birds found in this list.</li>
+                    <li>No birds found in this list.</li>
     {% endfor %}
-</ul>
 
 </div>
 
+</div>
+<div id="name_header">
+    <a href="{{ url_for('home') }}"><b>Birdédex Lists</b></a>
+    <div id="total-logged">Add sightings to your list</div>
+</div>
 
-
+<div class="menu-content">
+                
+                
+    <span>Logged in as {{ current_user.username }}</span>
+        <form action="{{ url_for('logout') }}" method="post">
+            <input type="submit" value="Logout">
+        </form>
+    
+</div>
 
 <script>
     function confirmDelete(birdName) {
@@ -139,3 +130,18 @@
 
 </body>
 </html>
+
+
+
+
+<!-- <h3>{{ list.title }}</h3>
+            <ul class="no-bullets">
+                {% for birdid, bird_name, sighting_time in bird_list %}
+                <li id="bird-{{ birdid }}">
+                    {{ birdid }}. {{ bird_name }}
+                    {% if sighting_time %}
+                    - {{ sighting_time.strftime('%m-%d-%Y') }}
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>-->

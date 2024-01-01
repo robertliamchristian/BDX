@@ -27,6 +27,16 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
+
+
+
+#############################################
+
+
+
+
+
+
 class UserSighting(db.Model):
     __tablename__ = 'user_sighting'
     sightingid = db.Column(db.Integer, primary_key=True)
@@ -42,9 +52,6 @@ class UserList(db.Model):
     title = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.now)
    
-
-
-
 class User(UserMixin, db.Model):
     __tablename__ = 'alluser'  # Set the new table name here
     id = db.Column(db.Integer, primary_key=True)
@@ -53,7 +60,6 @@ class User(UserMixin, db.Model):
     insert_date = db.Column(db.DateTime, nullable=False)
     email = db.Column(db.String(255))
     is_admin = db.Column(db.String)
-
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -85,7 +91,19 @@ class Log(db.Model):
 
     def __repr__(self):
         return f'<log {self.birdid}>'
+    
 
+
+
+
+
+#############################################
+
+
+
+
+
+# Login Logic
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -117,6 +135,15 @@ def logout():
     return redirect(url_for('login'))
 
 
+
+
+
+
+
+
+# Main Routes
+
+# Suggestions Route
 @app.route('/suggest_birds')
 def suggest_birds():
     query = request.args.get('query')
@@ -127,6 +154,8 @@ def suggest_birds():
     bird_names = [bird.bird for bird in matching_birds]
     return jsonify(bird_names)
 
+
+# View User Lists ROute
 @app.route('/userlist', methods=['GET', 'POST'])
 @login_required
 def userlist():
@@ -162,6 +191,9 @@ def userlist():
     csrf_token = session.get('_csrf_token')
     return render_template('userlist.html', lists=lists, csrf_token=csrf_token)
 
+
+
+# User List Edit/Add Route
 @app.route('/list/<int:listid>', methods=['GET', 'POST'])
 @login_required
 def view_list(listid):
@@ -228,6 +260,9 @@ def view_list(listid):
     return render_template('view_list.html', list=list, sightings=sightings_with_names, bird_count=bird_count)
 
 
+
+
+# Delete Items
 @app.route('/delete_sighting/<int:sightingid>', methods=['POST'])
 @login_required
 def delete_sighting(sightingid):
@@ -261,6 +296,13 @@ def delete_list(listid):
 
 
 
+
+#############################################
+
+
+
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if not current_user.is_authenticated:
@@ -274,6 +316,11 @@ def home():
                             sighted_count=distinct_sighted_bird_count, 
                             total_bird_count=total_distinct_bird_count,)
 
+
+
+
+
+# Main Route for Birdedex
 @app.route('/birdedex', methods=['GET', 'POST'])
 def index():
     if not current_user.is_authenticated:
@@ -333,6 +380,17 @@ def index():
                            sighted_count=distinct_sighted_bird_count, 
                            total_bird_count=total_distinct_bird_count,
                            anchor_id=anchor_id)
+
+
+
+
+
+#############################################
+
+
+
+
+
 
 if __name__ == '__main__':
     with app.app_context():
