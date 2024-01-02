@@ -69,6 +69,23 @@ body {
     background-color: #2C315C;
 }
 
+button {
+    background-color: #F50348;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #2C315C;
+}
+
+
+
 .bird-search input[type="text"] {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -117,4 +134,8 @@ body {
 
 #working {
     color: red
+}
+
+#existing-lists ul.no-bullets li {
+    padding: 10px 0;  /* Adjust as needed */
 }
