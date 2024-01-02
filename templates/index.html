@@ -26,7 +26,6 @@
                         </form>
                     </div>
                     <!-- Add in url for View List-->
-                    <a class="button" href="{{ url_for('userlist') }}">My Lists</a>
 
                     <div id="suggestions" style="display:none;"></div>
                 </div>
@@ -39,6 +38,42 @@
                 </div>
                 {% endif %}
             </div>
+            
+            <!-- More Options -->
+            <button id="more-options-button">More Options</button>
+            <div id="more-options-content" style="display: none;">
+
+            <div id="new-list-form">
+                <h2>Create a New List</h2>
+                <form action="{{ url_for('userlist') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    <input type="text" name="list_name" placeholder="Enter list title" required>
+                    <input type="submit" value="Create List">
+                </form>
+            </div>
+    
+            <!-- Display existing lists -->
+            <div id="existing-lists">
+                <h2>Existing Lists</h2>
+                <ul class='no-bullets'>
+                    {% for list in lists %}
+                        <li style="display: flex; justify-content: center; align-items: center;">
+                            <div style="flex-grow: 1; text-align: center;">
+                                <a class="list_white_content_link" href="{{ url_for('view_list', listid=list.listid) }}" style="margin-right: 10px;">{{ list.title }}</a>
+                                - Created on {{ list.created_at.strftime('%Y-%m-%d') }}
+                            </div>
+                            <!-- Delete List Form -->
+                            <form action="{{ url_for('delete_list', listid=list.listid) }}" method="POST" onsubmit="return confirmDeleteList('{{ list.title }}')" style="margin-left: 10px;">
+                                <button type="submit">Delete List</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li>No lists found.</li>
+                    {% endfor %}
+                </ul>
+            </div>    
+            </div>
+
         </div>
 
         <!-- Bottom Card -->
@@ -80,6 +115,15 @@
 
 
         <script>
+            document.getElementById('more-options-button').addEventListener('click', function() {
+    var content = document.getElementById('more-options-content');
+    if (content.style.display === 'none') {
+        content.style.display = 'block';
+    } else {
+        content.style.display = 'none';
+    }
+});
+
             function toggleMenu() {
                 var menu = document.getElementById("slide-in-menu");
                 menu.style.width = menu.style.width === '250px' ? '0' : '250px';

@@ -31,10 +31,11 @@ body {
     z-index: 2;
     width: 85.6%;
     max-width: 500px;
+    min-height: 176.5px;
 }
 
 #bottom-card {
-    margin-top: 120px;
+    margin-top: 160px;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;

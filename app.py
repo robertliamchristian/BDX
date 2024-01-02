@@ -189,7 +189,7 @@ def userlist():
     
     lists = UserList.query.filter_by(userid=current_user.id).all()
     csrf_token = session.get('_csrf_token')
-    return render_template('userlist.html', lists=lists, csrf_token=csrf_token)
+    return render_template('index.html', lists=lists, csrf_token=csrf_token)
 
 
 
@@ -373,13 +373,16 @@ def index():
     sighted_count = len(user_sightings)
     total_bird_count = len(all_birds)
 
+    lists = UserList.query.filter_by(userid=current_user.id).all()
+
 
     return render_template('index.html',
                            user_birdedex=user_birdedex,
                            message=message,
                            sighted_count=distinct_sighted_bird_count, 
                            total_bird_count=total_distinct_bird_count,
-                           anchor_id=anchor_id)
+                           anchor_id=anchor_id,
+                           lists=lists) 
 
 
 

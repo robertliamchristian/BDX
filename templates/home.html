@@ -15,11 +15,8 @@
             <a href="{{ url_for('home') }}"><b>Birdédex</b></a>
             <div id="total-logged">Thanks for using Birdedex! <a href="https://www.buymeacoffee.com/birdedex">Buy me a coffee</a></div>
         </div>
-        <div class="hamburger-menu" onclick="toggleMenu()">&#9776;</div>
     </div>
     
-    <div id="slide-in-menu" class="menu">
-    <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
 
     
     {% if current_user.is_authenticated %}
@@ -36,7 +33,7 @@
 
     </div>
     {% endif %}
-</div>
+
 
 </div>
 
