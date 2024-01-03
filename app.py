@@ -323,59 +323,75 @@ def home():
 # Main Route for Birdedex
 @app.route('/birdedex', methods=['GET', 'POST'])
 def index():
+    # Check if user is authenticated
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
 
+    # Initialize variables
     message = ""
     anchor_id = ""
 
+    # Handle form submission
     if request.method == 'POST':
+        # Get bird name from form
         new_bird_name = request.form['bird']
+        # Query for bird in the Log table
         new_bird = Log.query.filter_by(bird=new_bird_name).first()
 
+        # If bird exists in the Log table
         if new_bird:
+            # Check if a sighting of this bird by the current user already exists
             existing_sighting = UserSighting.query.filter_by(birdref=new_bird.birdid, userid=current_user.id).first()
             if existing_sighting:
+                # If sighting exists, update the sighting time
                 existing_sighting.sighting_time = datetime.now()
                 message = f"{new_bird_name} sighting updated."
             else:
+                # If sighting does not exist, create a new sighting
                 new_sighting = UserSighting(birdref=new_bird.birdid, userid=current_user.id, sighting_time=datetime.now())
                 db.session.add(new_sighting)
                 message = f"New sighting of {new_bird_name} added."
 
+            # Commit changes to the database
             db.session.commit()
             anchor_id = f"bird-{new_bird.birdid}"  
 
-    all_birds = Log.query.order_by(Log.family).all()
+    # Get all birds
+    all_birds = Log.query.order_by(Log.birdid).all()
+
+    # Count distinct sighted birds by the current user
     distinct_sighted_bird_count = UserSighting.query.with_entities(UserSighting.birdref).filter_by(userid=current_user.id).distinct().count()
+
+    # Count total distinct birds
     total_distinct_bird_count = Log.query.distinct(Log.birdid).count()
 
+    # Get all sightings by the current user
     user_sightings = UserSighting.query.filter_by(userid=current_user.id).all()
+    
+    # Convert sightings to a dictionary for easy lookup
     user_sightings_dict = {sighting.birdref: sighting for sighting in user_sightings}
 
-    user_birdedex = {}
-    default_bird_type = "Other"  
+    # Initialize user birdedex
+    user_birdedex = []
 
+    # Populate user birdedex
     for bird in all_birds:
-        family = bird.family if bird.family else default_bird_type
-
         if bird.birdid in user_sightings_dict:
             sighting = user_sightings_dict[bird.birdid]
-            bird_entry = (bird.birdid, bird.bird, sighting.sighting_time)
+            bird_entry = (bird.bird, sighting.sighting_time)
         else:
-            bird_entry = (bird.birdid, '???', None)
+            bird_entry = (bird.bird, None)
 
-        if bird.family not in user_birdedex:
-            user_birdedex[family] = []
+        user_birdedex.append(bird_entry)
 
-        user_birdedex[family].append(bird_entry)
-
+    # Count sighted birds and total birds
     sighted_count = len(user_sightings)
     total_bird_count = len(all_birds)
 
+    # Get all lists by the current user
     lists = UserList.query.filter_by(userid=current_user.id).all()
 
-
+    # Render the template with the gathered data
     return render_template('index.html',
                            user_birdedex=user_birdedex,
                            message=message,

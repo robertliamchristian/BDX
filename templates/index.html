@@ -79,24 +79,23 @@
         <!-- Bottom Card -->
         <div id="bottom-card">
             <div id="content">
-                {% for bird_type, bird_list in user_birdedex.items() %}
-                <h3>{{ bird_type }}</h3>
-                <ul class="no-bullets">
-                    {% for birdid, bird_name, sighting_time in bird_list %}
-                    <li id="bird-{{ birdid }}">
-                        {{ birdid }}. {{ bird_name }}
-                        {% if sighting_time %}
-                        - {{ sighting_time.strftime('%m-%d-%Y') }}
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-
+               <ol class="no-bullets">
+                {% for bird_name, sighting_time in user_birdedex %}
+                <li class="{{ 'unseen' if not sighting_time else 'seen' }}">
+                    {% if sighting_time %}
+                    <b>{{ bird_name }}</b> - {{ sighting_time.strftime('%m-%d-%Y') }}
+                    {% else %}
+                    <i>{{ bird_name }}</i>
+                    {% endif %}
+                </li>
                 {% endfor %}
+               </ol>
             </div>
+        </div>
         
 
         <!-- Exrta -->
+        <!-- 
         </div>
         <div class="user-info">
             <span>Logged in as {{ current_user.username }}</span>
@@ -104,7 +103,7 @@
                 <input type="submit" value="Logout">
             </form>
         </div>
-
+-->
 
 
 
