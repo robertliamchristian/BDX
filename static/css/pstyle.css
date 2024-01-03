@@ -35,7 +35,7 @@ body {
 }
 
 #bottom-card {
-    margin-top: 160px;
+    margin-top: 180px;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;
@@ -52,6 +52,7 @@ body {
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; 
+    
 }
 
 .bird-search input[type="submit"] {
@@ -162,3 +163,8 @@ button:hover {
 .seen {
     font-weight: bold;
 }
+
+#book {
+    font-size: 14pt;
+}
+

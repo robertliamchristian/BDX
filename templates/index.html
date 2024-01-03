@@ -77,25 +77,34 @@
         </div>
 
         <!-- Bottom Card -->
+        <!-- Bottom Card -->
         <div id="bottom-card">
-            <div id="content">
-               <ol class="no-bullets">
-                {% for bird_name, sighting_time in user_birdedex %}
-                <li class="{{ 'unseen' if not sighting_time else 'seen' }}">
-                    {% if sighting_time %}
-                    <b>{{ bird_name }}</b> - {{ sighting_time.strftime('%m-%d-%Y') }}
-                    {% else %}
-                    <i>{{ bird_name }}</i>
-                    {% endif %}
-                </li>
-                {% endfor %}
-               </ol>
+            <div id="book">
+                <table>
+                    {% for bird_name, sighting_time in user_birdedex %}
+                    <tr id="bird-{{ loop.index }}" class="{{ 'unseen' if not sighting_time else 'seen' }}">
+                        <td>{{ loop.index }}</td>
+                        <td>
+                            {% if sighting_time %}
+                            <b>{{ bird_name }}</b>
+                            {% else %}
+                            <i>{{ bird_name }}</i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if sighting_time %}
+                            {{ sighting_time.strftime('%m-%d-%Y') }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>
         
 
         <!-- Exrta -->
-        <!-- 
+        
         </div>
         <div class="user-info">
             <span>Logged in as {{ current_user.username }}</span>
@@ -103,7 +112,7 @@
                 <input type="submit" value="Logout">
             </form>
         </div>
--->
+
 
 
 
@@ -128,17 +137,16 @@
                 menu.style.width = menu.style.width === '250px' ? '0' : '250px';
             }
             window.onload = function () {
-                setTimeout(function () {
-                    var anchor_id = "{{ anchor_id }}";  // Get the anchor_id passed from Flask
-                    if (anchor_id) {
-                        var element = document.getElementById(anchor_id);
-                        if (element) {
-                            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    }
-                }, 100); // Adjust the timeout as needed
+    setTimeout(function () {
+        var anchor_id = "{{ anchor_id }}";  // Get the anchor_id passed from Flask
+        if (anchor_id) {
+            var element = document.getElementById(anchor_id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-
+        }
+    }, 100); // Adjust the timeout as needed
+}
 
             function fetchSuggestions() {
                 var input = document.getElementById('bird-input');
