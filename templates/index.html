@@ -17,6 +17,8 @@
             <!-- Add Bird Logic -->
             <div id="top-main">
                 {% if current_user.is_authenticated %}
+                <div class="flex-container"> 
+                    <div class="left-top-container">                                    
                 <div class="add-bird">
                     <div class="bird-search">
                         <form action="{{ url_for('index') }}" method="post">
@@ -29,6 +31,7 @@
 
                     <div id="suggestions" style="display:none;"></div>
                 </div>
+                
 
                 <!-- Update Message-->
                 <div id="message">
@@ -37,43 +40,48 @@
                     {% endif %}
                 </div>
                 {% endif %}
+                
             </div>
+        </div>   
             
             <!-- More Options -->
-            <button id="more-options-button">More Options</button>
+            <div id-"button-container">
+                <button id="more-options-button">More Options</button>
+            </div>
+            
+            </div>
             <div id="more-options-content" style="display: none;">
 
-            <div id="new-list-form">
-                <h2>Create a New List</h2>
-                <form action="{{ url_for('userlist') }}" method="post">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-                    <input type="text" name="list_name" placeholder="Enter list title" required>
-                    <input type="submit" value="Create List">
-                </form>
-            </div>
-    
-            <!-- Display existing lists -->
-            <div id="existing-lists">
-                <h2>Existing Lists</h2>
-                <ul class='no-bullets'>
-                    {% for list in lists %}
-                        <li style="display: flex; justify-content: center; align-items: center;">
-                            <div style="flex-grow: 1; text-align: center;">
-                                <a class="list_white_content_link" href="{{ url_for('view_list', listid=list.listid) }}" style="margin-right: 10px;">{{ list.title }}</a>
-                                - Created on {{ list.created_at.strftime('%Y-%m-%d') }}
-                            </div>
-                            <!-- Delete List Form -->
-                            <form action="{{ url_for('delete_list', listid=list.listid) }}" method="POST" onsubmit="return confirmDeleteList('{{ list.title }}')" style="margin-left: 10px;">
-                                <button type="submit">Delete List</button>
-                            </form>
-                        </li>
-                    {% else %}
-                        <li>No lists found.</li>
-                    {% endfor %}
-                </ul>
-            </div>    
-            </div>
-
+                <div id="new-list-form">
+                    <h2>Create a New List</h2>
+                    <form action="{{ url_for('userlist') }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <input type="text" name="list_name" placeholder="Enter list title" required>
+                        <input type="submit" value="Create List">
+                    </form>
+                </div>
+        
+                <!-- Display existing lists -->
+                <div id="existing-lists">
+                    <h2>Existing Lists</h2>
+                    <ul class='no-bullets'>
+                        {% for list in lists %}
+                            <li style="display: flex; justify-content: center; align-items: center;">
+                                <div style="flex-grow: 1; text-align: center;">
+                                    <a class="list_white_content_link" href="{{ url_for('view_list', listid=list.listid) }}" style="margin-right: 10px;">{{ list.title }}</a>
+                                    - Created on {{ list.created_at.strftime('%Y-%m-%d') }}
+                                </div>
+                                <!-- Delete List Form -->
+                                <form action="{{ url_for('delete_list', listid=list.listid) }}" method="POST" onsubmit="return confirmDeleteList('{{ list.title }}')" style="margin-left: 10px;">
+                                    <button type="submit">Delete List</button>
+                                </form>
+                            </li>
+                        {% else %}
+                            <li>No lists found.</li>
+                        {% endfor %}
+                    </ul>
+                </div>    
+                </div>
         </div>
 
         <!-- Bottom Card -->
@@ -112,6 +120,8 @@
                 <input type="submit" value="Logout">
             </form>
         </div>
+
+        
 
 
 

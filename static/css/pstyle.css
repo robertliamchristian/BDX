@@ -28,10 +28,11 @@ body {
     border-top-left-radius: 25px;
     border: 2px solid #e6e6e6;
     position: fixed;
-    z-index: 2;
+    z-index: 1000;
     width: 85.6%;
     max-width: 500px;
     min-height: 176.5px;
+
 }
 
 #bottom-card {
@@ -52,8 +53,11 @@ body {
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; 
-    
+    z-index: 1;
 }
+
+
+
 
 .bird-search input[type="submit"] {
     background-color: #F50348;
@@ -167,4 +171,34 @@ button:hover {
 #book {
     font-size: 14pt;
 }
+
+#button-container {
+    margin-top: 10px;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center; /* This will vertically align the items if they have different heights */
+    justify-content: space-between; /* Adjust this according to your design requirements */
+}
+
+/* Ensure the form and the button grow and shrink appropriately */
+.add-bird, .more-options {
+    flex: 1; /* Adjust the flex-grow, flex-shrink, and flex-basis values as needed */
+}
+
+#top-main {
+    display: flex; /* Establishes a flex container */
+    align-items: center; /* Centers items vertically within the container */
+    justify-content: space-between; /* Spreads out the form and the button */
+    padding: 20px; /* Add padding as needed */
+}
+
+/* Styles for the form and the button to ensure they can grow as needed */
+.bird-search, #button-container {
+    flex-grow: 1;
+    margin-right: 10px; /* Add some space between the form and the button */
+}
+
+
 
