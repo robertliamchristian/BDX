@@ -109,18 +109,16 @@ button:hover {
 .user-info {
     position: fixed;
     z-index: 5;
-    margin-bottom: 50px;
     margin-left: 400px;
-    margin-top: 950px;
+    margin-top: 910px;
     color: #f2f2f2;
 }
 
 .logo {
     position: fixed;
     z-index: 5;
-    margin-bottom: 60px;
     margin-left: 65px;
-    margin-top: 950px;
+    margin-top: 910px;
     color: #f2f2f2;
     font-size: 32pt;
 }
