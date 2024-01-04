@@ -34,13 +34,13 @@
 
     <div id="suggestions" style="display:none;"></div>
     <div id="name_header">
-        <div id="logo-link"><a href="{{ url_for('index') }}"><b>Birdédex</b></a></div>
         <div id="total-logged">Add sightings to your list</div>
     </div>
 </div>
 </div>
     <div id="bottom-card">
-        
+        <div id="logo-link"><a href="{{ url_for('index') }}"><b>Back to BeakBook</b></a></div>
+
         <div id="userlist"></div>
             <h1>{{ list.title }} - Bird Count : {{ bird_count }}</h1>
             <h3>Logged Birds:</h3>
@@ -78,6 +78,11 @@
     <form action="{{ url_for('logout') }}" method="post">
         <input type="submit" value="Logout">
     </form>
+</div>
+<div class="logo">
+    <span>
+        BeakBook
+    </span>
 </div>
 
 <script>

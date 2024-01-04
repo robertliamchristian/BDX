@@ -9,7 +9,7 @@ body {
 }
 
 #main-container {
-    margin-top: 50px;
+    margin-top: 0px;
     margin-bottom: 50px;
     margin-left: 50px;
     margin-right: 50px;
@@ -18,7 +18,7 @@ body {
 }
 
 #top-card {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 0px;
     margin-left: 0px;
     margin-right: 0px;
@@ -37,7 +37,7 @@ body {
 
 #bottom-card {
     margin-top: 180px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 0px;
     padding: 20px;
@@ -110,7 +110,19 @@ button:hover {
     position: fixed;
     z-index: 5;
     margin-bottom: 50px;
-    margin-left: 20px;
+    margin-left: 400px;
+    margin-top: 950px;
+    color: #f2f2f2;
+}
+
+.logo {
+    position: fixed;
+    z-index: 5;
+    margin-bottom: 60px;
+    margin-left: 65px;
+    margin-top: 950px;
+    color: #f2f2f2;
+    font-size: 32pt;
 }
 
 #suggestions {
@@ -191,7 +203,7 @@ button:hover {
     display: flex; /* Establishes a flex container */
     align-items: center; /* Centers items vertically within the container */
     justify-content: space-between; /* Spreads out the form and the button */
-    padding: 20px; /* Add padding as needed */
+    padding-bottom: 20px; /* Add padding as needed */
 }
 
 /* Styles for the form and the button to ensure they can grow as needed */
@@ -201,4 +213,17 @@ button:hover {
 }
 
 
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 25px;
+    overflow: hidden;
+}
 
+.progress-bar-fill {
+    height: 25px;
+    background-color: #F50348;
+    text-align: center;
+    line-height: 25px;
+    color: black;
+}

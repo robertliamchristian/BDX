@@ -50,6 +50,12 @@
             </div>
             
             </div>
+            <div>Distinct Birds Logged {{ sighted_count }} / {{ total_bird_count }}</div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: {{ (sighted_count / total_bird_count) * 100 }}%;">
+                    Total Distinct Birds Logged {{ sighted_count }}/{{ total_bird_count }}
+                </div>
+            </div>
             <div id="more-options-content" style="display: none;">
 
                 <div id="new-list-form">
@@ -119,6 +125,11 @@
             <form action="{{ url_for('logout') }}" method="post">
                 <input type="submit" value="Logout">
             </form>
+        </div>
+        <div class="logo">
+            <span>
+                BeakBook
+            </span>
         </div>
 
         
