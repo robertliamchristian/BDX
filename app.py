@@ -87,7 +87,14 @@ class Log(db.Model):
     flags = db.Column(db.String(255), nullable=True)
     #sighting_time = db.Column(db.DateTime, nullable=True)
     bird_type = db.Column(db.String(255), nullable=True)
+    typeref = db.Column(db.Integer, db.ForeignKey('bird_types.typeid'))
     #user_id = db.Column(db.Integer, db.ForeignKey('alluser.id'))  
+
+class BirdType(db.Model):
+    __tablename__ = 'bird_types'
+    typeid = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(255), nullable=False)
+
 
     def __repr__(self):
         return f'<log {self.birdid}>'
@@ -155,7 +162,7 @@ def suggest_birds():
     return jsonify(bird_names)
 
 
-# View User Lists ROute
+# View User Lists Route
 @app.route('/userlist', methods=['GET', 'POST'])
 @login_required
 def userlist():

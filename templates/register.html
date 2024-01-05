@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Register for Birdedex</title>
-    <!-- Add any additional head elements here (like CSS links) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pstyle.css') }}">
 </head>
 <body>
-    <h1>Register for Birdedex</h1>
+    <div id="main-container">
+        <div id="top-card">
+                <div id="title">
+                    <p>
+                        BeakBook
+                    </p>
+                </div>
+        </div>
+        <div id="bottom-card">
     <form method="POST">
+        <h2>
+            Register for BeakBook
+        </h2>
         {{ form.hidden_tag() }}
         <div>
             {{ form.username.label }}<br>
@@ -28,5 +39,8 @@
         </div>
     </form>
     <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a>.</p>
+</div>
+</div>
+
 </body>
 </html>
