@@ -94,27 +94,33 @@
         <!-- Bottom Card -->
         <div id="bottom-card">
             <div id="book">
+                {% for bird_type, birds in birds_by_type_list %}
+                <h3>{{ bird_type }}</h3>
                 <table>
-                    {% for bird_name, sighting_time in user_birdedex %}
-                    <tr id="bird-{{ loop.index }}" class="{{ 'unseen' if not sighting_time else 'seen' }}">
+                    {% for bird in birds %}
+                    <tr id="bird-{{ loop.index }}" class="{{ 'unseen' if not bird.sighted else 'seen' }}">
                         <td>{{ loop.index }}</td>
                         <td>
-                            {% if sighting_time %}
-                            <b>{{ bird_name }}</b>
+                            {% if bird.sighted %}
+                            <b>{{ bird.bird }}</b>
                             {% else %}
-                            <i>{{ bird_name }}</i>
+                            <i>{{ bird.bird }}</i>
                             {% endif %}
                         </td>
                         <td>
-                            {% if sighting_time %}
-                            {{ sighting_time.strftime('%m-%d-%Y') }}
+                            {% if bird.sighted %}
+                            <!-- Display sighting time if available -->
+                            {{ bird.sighting_time.strftime('%m-%d-%Y') if bird.sighting_time else '' }}
                             {% endif %}
                         </td>
                     </tr>
                     {% endfor %}
                 </table>
+                {% endfor %}
             </div>
         </div>
+        
+        
         
 
         <!-- Exrta -->

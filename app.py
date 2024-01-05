@@ -364,49 +364,48 @@ def index():
             anchor_id = f"bird-{new_bird.birdid}"  
 
     # Get all birds
-    all_birds = Log.query.order_by(Log.birdid).all()
+    # Fetch all bird types
+    all_bird_types = BirdType.query.all()
+    bird_type_dict = {bird_type.typeid: bird_type.type for bird_type in all_bird_types}
 
-    # Count distinct sighted birds by the current user
-    distinct_sighted_bird_count = UserSighting.query.with_entities(UserSighting.birdref).filter_by(userid=current_user.id).distinct().count()
-
-    # Count total distinct birds
-    total_distinct_bird_count = Log.query.distinct(Log.birdid).count()
-
-    # Get all sightings by the current user
+    # Fetch all user sightings
     user_sightings = UserSighting.query.filter_by(userid=current_user.id).all()
-    
-    # Convert sightings to a dictionary for easy lookup
     user_sightings_dict = {sighting.birdref: sighting for sighting in user_sightings}
+    sighted_birds = {sighting.birdref for sighting in user_sightings}
 
-    # Initialize user birdedex
-    user_birdedex = []
-
-    # Populate user birdedex
+    # Fetch and group all birds by type
+    all_birds = Log.query.order_by(Log.birdid).all()
+    birds_by_type = {}
     for bird in all_birds:
-        if bird.birdid in user_sightings_dict:
-            sighting = user_sightings_dict[bird.birdid]
-            bird_entry = (bird.bird, sighting.sighting_time)
-        else:
-            bird_entry = (bird.bird, None)
+        bird_type_name = bird_type_dict.get(bird.typeref, "Unknown Type")
+        if bird_type_name not in birds_by_type:
+            birds_by_type[bird_type_name] = []
 
-        user_birdedex.append(bird_entry)
+        sighting = user_sightings_dict.get(bird.birdid)
+        bird_info = {
+            "bird": bird.bird,
+            "sighted": bird.birdid in sighted_birds,
+            "sighting_time": sighting.sighting_time if sighting else None
+        }
+        birds_by_type[bird_type_name].append(bird_info)
 
-    # Count sighted birds and total birds
-    sighted_count = len(user_sightings)
-    total_bird_count = len(all_birds)
+    birds_by_type_list = [(bird_type, birds) for bird_type, birds in birds_by_type.items()]
+
+    # Count distinct sighted birds and total distinct birds
+    distinct_sighted_bird_count = len(sighted_birds)
+    total_distinct_bird_count = len(all_birds)
 
     # Get all lists by the current user
     lists = UserList.query.filter_by(userid=current_user.id).all()
 
-    # Render the template with the gathered data
+    # Render the template
     return render_template('index.html',
-                           user_birdedex=user_birdedex,
+                           birds_by_type_list=birds_by_type_list,
                            message=message,
                            sighted_count=distinct_sighted_bird_count, 
                            total_bird_count=total_distinct_bird_count,
                            anchor_id=anchor_id,
-                           lists=lists) 
-
+                           lists=lists)
 
 
 
