@@ -45,18 +45,21 @@
         </div>   
             
             <!-- More Options -->
-            <div id-"button-container">
-                <button id="more-options-button">More Options</button>
-            </div>
+            
             
             </div>
-            <div>Distinct Birds Logged {{ sighted_count }} / {{ total_bird_count }}</div>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" style="width: {{ (sighted_count / total_bird_count) * 100 }}%;">
-                    Total Distinct Birds Logged {{ sighted_count }}/{{ total_bird_count }}
+            <div id="flex-options">
+                <div id="count-birds">Birds Logged</div>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill" style="width: {{ (sighted_count / total_bird_count) * 100 }}%;">
+                        {{ sighted_count }}/{{ total_bird_count }}
+                    </div>
+                </div>
+
+                <div id="button-container">
+                    <button id="more-options-button">&#9660;</button>
                 </div>
             </div>
-           
             
             <div id="more-options-content" style="display: none;">
                 <div id="sighted-filter">
@@ -80,7 +83,7 @@
                         
                      </div>
                 <div id="new-list-form">
-                    <h2>Create a New List</h2>
+                    <h4>Create a New List</h4>
                     <form action="{{ url_for('userlist') }}" method="post">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <input type="text" name="list_name" placeholder="Enter list title" required>
@@ -90,16 +93,16 @@
         
                 <!-- Display existing lists -->
                 <div id="existing-lists">
-                    <h2>Existing Lists</h2>
+                    <h4>Existing Lists</h4>
                     <ul class='no-bullets'>
                         {% for list in lists %}
-                            <li style="display: flex; justify-content: center; align-items: center;">
-                                <div style="flex-grow: 1; text-align: center;">
+                            <li style="display: flex; justify-content: left; align-items: left;">
+                                <div style="flex-grow: 1; text-align: left;">
                                     <a class="list_white_content_link" href="{{ url_for('view_list', listid=list.listid) }}" style="margin-right: 10px;">{{ list.title }}</a>
                                     - Created on {{ list.created_at.strftime('%Y-%m-%d') }}
                                 </div>
                                 <!-- Delete List Form -->
-                                <form action="{{ url_for('delete_list', listid=list.listid) }}" method="POST" onsubmit="return confirmDeleteList('{{ list.title }}')" style="margin-left: 10px;">
+                                <form action="{{ url_for('delete_list', listid=list.listid) }}" method="POST" onsubmit="return confirmDeleteList('{{ list.title }}')" style="margin-left: 5px;">
                                     <button type="submit">Delete List</button>
                                 </form>
                             </li>

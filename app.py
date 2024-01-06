@@ -320,7 +320,7 @@ def delete_list(listid):
 
 
 
-
+'''
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if not current_user.is_authenticated:
@@ -333,13 +333,13 @@ def home():
     return render_template('home.html',
                             sighted_count=distinct_sighted_bird_count, 
                             total_bird_count=total_distinct_bird_count,)
-
+'''
 
 
 
 
 # Main Route for Birdedex
-@app.route('/birdedex', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     show_sighted_only = request.args.get('show_sighted_only', 'false') == 'true'
     filter_state = request.args.get('filter_state', None)  # None means no state filter is applied
