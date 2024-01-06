@@ -56,6 +56,27 @@
                     Total Distinct Birds Logged {{ sighted_count }}/{{ total_bird_count }}
                 </div>
             </div>
+            <div id="sighted-filter">
+            <form method="get" action="{{ url_for('index') }}">
+                <input type="checkbox" name="show_sighted_only" value="true" {{ 'checked' if show_sighted_only else '' }}> Show Sighted Birds Only
+                <button type="submit">Filter</button>
+            </form>
+            </div>
+
+            <div id="state-filter">
+                <form method="get" action="{{ url_for('index') }}">
+                    <!-- Other form elements -->
+                    <select name="filter_state">
+                        <option value="">All States</option>
+                        {% for state in states %}
+                        <option value="{{ state }}" {% if state == filter_state %}selected{% endif %}>{{ state }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" value="Filter">Filter</button>
+                </form>
+                
+             </div>
+            
             <div id="more-options-content" style="display: none;">
 
                 <div id="new-list-form">

@@ -95,6 +95,17 @@ class BirdType(db.Model):
     typeid = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(255), nullable=False)
 
+class RegionJunction(db.Model):
+    __tablename__ = 'region_junction'
+    region_association_id = db.Column(db.Integer, primary_key=True)
+    bird_ref = db.Column(db.Integer, db.ForeignKey('log.birdid'))
+    region_ref = db.Column(db.Integer, db.ForeignKey('region.regionid'))
+
+class RegionDim(db.Model):
+    __tablename__ = 'region_dim'
+    id = db.Column(db.Integer, primary_key=True)
+    region = db.Column(db.String(255), nullable=False)
+
 
     def __repr__(self):
         return f'<log {self.birdid}>'
@@ -330,6 +341,8 @@ def home():
 # Main Route for Birdedex
 @app.route('/birdedex', methods=['GET', 'POST'])
 def index():
+    show_sighted_only = request.args.get('show_sighted_only', 'false') == 'true'
+    filter_state = request.args.get('filter_state', None)  # None means no state filter is applied
     # Check if user is authenticated
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -368,26 +381,41 @@ def index():
     all_bird_types = BirdType.query.all()
     bird_type_dict = {bird_type.typeid: bird_type.type for bird_type in all_bird_types}
 
-    # Fetch all user sightings
+   # Fetch all user sightings
     user_sightings = UserSighting.query.filter_by(userid=current_user.id).all()
     user_sightings_dict = {sighting.birdref: sighting for sighting in user_sightings}
     sighted_birds = {sighting.birdref for sighting in user_sightings}
 
-    # Fetch and group all birds by type
-    all_birds = Log.query.order_by(Log.birdid).all()
-    birds_by_type = {}
-    for bird in all_birds:
-        bird_type_name = bird_type_dict.get(bird.typeref, "Unknown Type")
-        if bird_type_name not in birds_by_type:
-            birds_by_type[bird_type_name] = []
+    # If a state filter is applied, modify the query
+    if filter_state:
+        all_birds = (
+            Log.query
+            .join(RegionJunction, Log.birdid == RegionJunction.bird_ref)
+            .join(RegionDim, RegionJunction.region_ref == RegionDim.id)
+            .filter(RegionDim.region == filter_state)
+            .order_by(Log.birdid)
+            .all()
+        )
+    else:
+        all_birds = Log.query.order_by(Log.birdid).all()
 
-        sighting = user_sightings_dict.get(bird.birdid)
-        bird_info = {
-            "bird": bird.bird,
-            "sighted": bird.birdid in sighted_birds,
-            "sighting_time": sighting.sighting_time if sighting else None
-        }
-        birds_by_type[bird_type_name].append(bird_info)
+    # Fetch and group all birds by type, filtered based on the show_sighted_only flag
+    #all_birds = Log.query.order_by(Log.birdid).all()
+    birds_by_type = {}
+
+    for bird in all_birds:
+        if not show_sighted_only or bird.birdid in sighted_birds:
+            bird_type_name = bird_type_dict.get(bird.typeref, "Unknown Type")
+            if bird_type_name not in birds_by_type:
+                birds_by_type[bird_type_name] = []
+
+            sighting = user_sightings_dict.get(bird.birdid)
+            bird_info = {
+                "bird": bird.bird,
+                "sighted": bird.birdid in sighted_birds,
+                "sighting_time": sighting.sighting_time if sighting else None
+            }
+            birds_by_type[bird_type_name].append(bird_info)
 
     birds_by_type_list = [(bird_type, birds) for bird_type, birds in birds_by_type.items()]
 
@@ -398,6 +426,7 @@ def index():
     # Get all lists by the current user
     lists = UserList.query.filter_by(userid=current_user.id).all()
 
+    states = [rd.region for rd in RegionDim.query.with_entities(RegionDim.region).distinct().order_by(RegionDim.region)]
     # Render the template
     return render_template('index.html',
                            birds_by_type_list=birds_by_type_list,
@@ -405,7 +434,8 @@ def index():
                            sighted_count=distinct_sighted_bird_count, 
                            total_bird_count=total_distinct_bird_count,
                            anchor_id=anchor_id,
-                           lists=lists)
+                           lists=lists,
+                           states=states)
 
 
 

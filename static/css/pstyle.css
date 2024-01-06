@@ -36,7 +36,7 @@ body {
 }
 
 #bottom-card {
-    margin-top: 180px;
+    margin-top: 210px;
     margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 0px;
@@ -110,7 +110,7 @@ button:hover {
     position: fixed;
     z-index: 5;
     margin-left: 400px;
-    margin-top: 910px;
+    margin-top: 940px;
     color: #f2f2f2;
 }
 
@@ -118,7 +118,7 @@ button:hover {
     position: fixed;
     z-index: 5;
     margin-left: 65px;
-    margin-top: 905px;
+    margin-top: 935px;
     color: #f2f2f2;
     font-size: 32pt;
     font-weight: bold;
@@ -231,4 +231,8 @@ button:hover {
     text-align: center;
     font-size: 36pt;
     font-weight: bold;
+}
+
+#sighted-filter {
+    margin-top: 10px;
 }
