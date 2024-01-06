@@ -55,6 +55,8 @@ body {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; 
     z-index: 1;
+    width: 85.6%;
+
 }
 
 
