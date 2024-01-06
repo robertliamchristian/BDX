@@ -11,10 +11,11 @@ body {
 #main-container {
     margin-top: 0px;
     margin-bottom: 50px;
-    margin-left: 50px;
+    margin-left: 10px;
     margin-right: 50px;
     padding: 0px;
     background-color: #3D437E;
+
 }
 
 #top-card {
@@ -36,7 +37,7 @@ body {
 }
 
 #bottom-card {
-    margin-top: 210px;
+    margin-top: 180px;
     margin-bottom: 10px;
     margin-left: 0px;
     margin-right: 0px;
@@ -49,7 +50,7 @@ body {
     position: fixed;
     width: 100%;
     max-width: 500px;
-    height: 600px;
+    height: 400px;
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; 
@@ -109,16 +110,16 @@ button:hover {
 .user-info {
     position: fixed;
     z-index: 5;
-    margin-left: 400px;
-    margin-top: 940px;
+    margin-left: 350px;
+    margin-top: 710px;
     color: #f2f2f2;
 }
 
 .logo {
     position: fixed;
     z-index: 5;
-    margin-left: 65px;
-    margin-top: 935px;
+    margin-left: 15px;
+    margin-top: 705px;
     color: #f2f2f2;
     font-size: 32pt;
     font-weight: bold;
@@ -235,4 +236,31 @@ button:hover {
 
 #sighted-filter {
     margin-top: 10px;
+}
+
+#more-options-content {
+    overflow-y: auto;
+    max-height: 450px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+/* For Chrome, Safari, and Opera */
+#more-options-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+#more-options-content {
+    scrollbar-width: none;
+}
+
+/* For Chrome, Safari, and Opera */
+#suggestions::-webkit-scrollbar {
+    display: none;
+}
+
+/* For Firefox */
+#suggestions {
+    scrollbar-width: none;
 }
